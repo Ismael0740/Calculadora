@@ -1,8 +1,10 @@
 package calculadora;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -11,14 +13,15 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class Ejercicio {
 
-	static String contador = "";
-	static ArrayList<Integer> modificadores = new ArrayList<Integer>();
-	static ArrayList<String> cadena = new ArrayList<String>();
+	static double contador = 0;
 
-	static JLabel resultado = new JLabel("--------- ");
+	static boolean decimal = false;
+
+	static JTextField resultado = new JTextField("---------" + contador);
 
 	private static class EscuchadorInterno implements ActionListener {
 
@@ -26,120 +29,164 @@ public class Ejercicio {
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 
+			String teclaPulsada = "";
+
 			String comando = e.getActionCommand();
 			switch (comando) {
 			// DONE
 			case "C":
-				contador = "";
-				cadena.clear();
+				teclaPulsada = "C";
+
+				contador = 0;
 				break;
 			case "0":
-				contador = contador + "0";
+				teclaPulsada = "0";
+
+				contador = contador + 0;
 				break;
 			case ".":
-				contador = contador + ".";
+				teclaPulsada = ".";
+
+				decimal = true;
 				break;
 			case "+":
-				modificadores.add(1);
-				cadena.add(contador);
+				teclaPulsada = "+";
+
 				break;
 			case "=":
+				decimal = false;
 
-				resultado.setText("----------" + Calculador(modificadores, cadena));
+				teclaPulsada = "=";
+
+				resultado.setText("----------" + contador);
 				break;
 			case "1":
-				contador = contador + "1";
+				teclaPulsada = "1";
+
+				if (decimal == true) {
+					contador = contador + 0.1;
+				} else {
+					contador = contador + 1;
+				}
+				decimal = false;
+
 				break;
 			case "2":
-				contador = contador + "2";
+				teclaPulsada = "2";
+
+				if (decimal == true) {
+					contador = contador + 0.2;
+				} else {
+					contador = contador + 2;
+				}
+
+				decimal = false;
 				break;
 			case "3":
-				contador = contador + "3";
+				teclaPulsada = "3";
+
+				if (decimal == true) {
+					contador = contador + 0.3;
+				} else {
+					contador = contador + 3;
+				}
+
+				decimal = false;
 				break;
 			case "-":
-				modificadores.add(2);
-				cadena.add(contador);
+				teclaPulsada = "-";
+
 				break;
 			case "4":
-				contador = contador + "4";
+				teclaPulsada = "4";
+
+				if (decimal == true) {
+					contador = contador + 0.4;
+				} else {
+					contador = contador + 4;
+				}
+
+				decimal = false;
 				break;
 			case "5":
-				contador = contador + "5";
+				teclaPulsada = "5";
+
+				if (decimal == true) {
+					contador = contador + 0.5;
+				} else {
+					contador = contador + 5;
+				}
+
+				decimal = false;
 				break;
 			case "6":
-				contador = contador + "6";
+				teclaPulsada = "6";
+
+				if (decimal == true) {
+					contador = contador + 0.6;
+				} else {
+					contador = contador + 6;
+				}
+
+				decimal = false;
 				break;
 			case "X":
-				modificadores.add(3);
-				cadena.add(contador);
+				teclaPulsada = "X";
+
 				break;
 			case "/":
-				modificadores.add(4);
-				cadena.add(contador);
+				teclaPulsada = "/";
+
 				break;
 			case "7":
-				contador = contador + "7";
+				teclaPulsada = "7";
+
+				if (decimal == true) {
+					contador = contador + 0.7;
+				} else {
+					contador = contador + 7;
+				}
+
+				decimal = false;
 				break;
 			case "8":
-				contador = contador + "8";
+				teclaPulsada = "8";
+
+				if (decimal == true) {
+					contador = contador + 0.8;
+				} else {
+					contador = contador + 8;
+				}
+
+				decimal = false;
 				break;
 			case "9":
-				contador = contador + "9";
+				teclaPulsada = "9";
+
+				if (decimal == true) {
+					contador = contador + 0.9;
+				} else {
+					contador = contador + 9;
+				}
+
+				decimal = false;
 				break;
 			case "%":
+				teclaPulsada = "%";
+
 				break;
 			case "->":
+				teclaPulsada = "->";
+
 				break;
 
 			default:
 				break;
 			}
+
+			System.out.println("Has pulsado la tecla " + teclaPulsada);
 		}
 
-	}
-
-	public static double Calculador(ArrayList<Integer> modificadores, ArrayList<String> cadena) {
-
-		int valor = 0;
-
-		for (int i = 0; i < modificadores.size(); i++) {
-
-			if (modificadores.get(i) == 1) {
-
-				if (i == 0) {
-					valor = Integer.parseInt(cadena.get(i)) + Integer.parseInt(cadena.get(i + 1));
-				} else {
-					valor = valor + Integer.parseInt(cadena.get(i + 1));
-				}
-			} else if (modificadores.get(i) == 2) {
-
-				if (i == 0) {
-					valor = Integer.parseInt(cadena.get(i)) - Integer.parseInt(cadena.get(i + 1));
-				} else {
-					valor = valor - Integer.parseInt(cadena.get(i + 1));
-				}
-
-			} else if (modificadores.get(i) == 3) {
-
-				if (i == 0) {
-					valor = Integer.parseInt(cadena.get(i)) * Integer.parseInt(cadena.get(i + 1));
-				} else {
-					valor = valor * Integer.parseInt(cadena.get(i + 1));
-				}
-
-			} else if (modificadores.get(i) == 4) {
-
-				if (i == 0) {
-					valor = Integer.parseInt(cadena.get(i)) / Integer.parseInt(cadena.get(i + 1));
-				} else {
-					valor = valor / Integer.parseInt(cadena.get(i + 1));
-				}
-
-			}
-
-		}
-
-		return valor;
 	}
 
 	public static void main(String[] args) {
@@ -148,15 +195,19 @@ public class Ejercicio {
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		JFrame frame = new JFrame("Calculadora");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		frame.setLayout(new BorderLayout());
 		frame.setBounds(500, 200, 700, 700);
 
 		JPanel panelCentral = new JPanel();
 		JPanel panelSuperior = new JPanel();
+		panelSuperior.setPreferredSize(new Dimension(200, 100));
 
-		panelCentral.setLayout(new GridBagLayout());
-		panelSuperior.setLayout(new GridBagLayout());
+		panelCentral.setLayout(new GridLayout());
+		panelSuperior.setLayout(new GridLayout());
 		EscuchadorInterno eb = new EscuchadorInterno();
+
+		panelCentral.setLayout(new GridLayout(4, 5, 15, 15));
+		panelSuperior.setLayout(new GridLayout(1, 1));
 
 		JButton jbC = new JButton("C");
 		JButton jb0 = new JButton("0");
@@ -198,131 +249,49 @@ public class Ejercicio {
 		jbPercent.addActionListener(eb);
 		jbArrow.addActionListener(eb);
 
-		// Constraints son ajustes modificables que puedes aplicar a la hora de usar el
-		// metodo .add para posicionar las piezas del frame
+		panelCentral.add(jb7);
 
-		GridBagConstraints constraints = new GridBagConstraints();
-		constraints.gridx = 0; // El área de texto empieza en la columna cero.
-		constraints.gridy = 3; // El área de texto empieza en la fila cero
-		constraints.gridwidth = 1; // El área de texto ocupa dos columnas.
-		constraints.gridheight = 1; // El área de texto ocupa dos filas.
-		panelCentral.add(jbC, constraints);
+		panelCentral.add(jb8);
 
-		constraints.gridx = 1;
-		constraints.gridy = 3;
-		constraints.gridwidth = 1;
-		constraints.gridheight = 1;
-		panelCentral.add(jb0, constraints);
+		panelCentral.add(jb9);
 
-		constraints.gridx = 2;
-		constraints.gridy = 3;
-		constraints.gridwidth = 1;
-		constraints.gridheight = 1;
-		panelCentral.add(jbPoint, constraints);
+		panelCentral.add(jbPercent);
 
-		constraints.gridx = 3;
-		constraints.gridy = 3;
-		constraints.gridwidth = 1;
-		constraints.gridheight = 1;
-		panelCentral.add(jbPlus, constraints);
+		panelCentral.add(jbArrow);
 
-		constraints.gridx = 4;
-		constraints.gridy = 3;
-		constraints.gridwidth = 1;
-		constraints.gridheight = 1;
-		panelCentral.add(jbEquals, constraints);
+		panelCentral.add(jb4);
 
-		constraints.gridx = 0;
-		constraints.gridy = 2;
-		constraints.gridwidth = 1;
-		constraints.gridheight = 1;
-		panelCentral.add(jb1, constraints);
+		panelCentral.add(jb5);
 
-		constraints.gridx = 1;
-		constraints.gridy = 2;
-		constraints.gridwidth = 1;
-		constraints.gridheight = 1;
-		panelCentral.add(jb2, constraints);
+		panelCentral.add(jb6);
 
-		constraints.gridx = 2;
-		constraints.gridy = 2;
-		constraints.gridwidth = 1;
-		constraints.gridheight = 1;
-		panelCentral.add(jb3, constraints);
+		panelCentral.add(jbX);
 
-		constraints.gridx = 3;
-		constraints.gridy = 2;
-		constraints.gridwidth = 1;
-		constraints.gridheight = 1;
-		panelCentral.add(jbMinus, constraints);
+		panelCentral.add(jbDivide);
 
-		constraints.gridx = 0;
-		constraints.gridy = 1;
-		constraints.gridwidth = 1;
-		constraints.gridheight = 1;
-		panelCentral.add(jb4, constraints);
+		panelCentral.add(jb1);
 
-		constraints.gridx = 1;
-		constraints.gridy = 1;
-		constraints.gridwidth = 1;
-		constraints.gridheight = 1;
-		panelCentral.add(jb5, constraints);
+		panelCentral.add(jb2);
 
-		constraints.gridx = 2;
-		constraints.gridy = 1;
-		constraints.gridwidth = 1;
-		constraints.gridheight = 1;
-		panelCentral.add(jb6, constraints);
+		panelCentral.add(jb3);
 
-		constraints.gridx = 3;
-		constraints.gridy = 1;
-		constraints.gridwidth = 1;
-		constraints.gridheight = 1;
-		panelCentral.add(jbX, constraints);
+		panelCentral.add(jbMinus);
 
-		constraints.gridx = 4;
-		constraints.gridy = 1;
-		constraints.gridwidth = 1;
-		constraints.gridheight = 1;
-		panelCentral.add(jbDivide, constraints);
+		panelCentral.add(new JLabel(""));
 
-		constraints.gridx = 0;
-		constraints.gridy = 0;
-		constraints.gridwidth = 1;
-		constraints.gridheight = 1;
-		panelCentral.add(jb7, constraints);
+		panelCentral.add(jbC);
 
-		constraints.gridx = 1;
-		constraints.gridy = 0;
-		constraints.gridwidth = 1;
-		constraints.gridheight = 1;
-		panelCentral.add(jb8, constraints);
+		panelCentral.add(jb0);
 
-		constraints.gridx = 2;
-		constraints.gridy = 0;
-		constraints.gridwidth = 1;
-		constraints.gridheight = 1;
-		panelCentral.add(jb9, constraints);
+		panelCentral.add(jbPoint);
 
-		constraints.gridx = 3;
-		constraints.gridy = 0;
-		constraints.gridwidth = 1;
-		constraints.gridheight = 1;
-		panelCentral.add(jbPercent, constraints);
+		panelCentral.add(jbPlus);
 
-		constraints.gridx = 4;
-		constraints.gridy = 0;
-		constraints.gridwidth = 1;
-		constraints.gridheight = 1;
-		panelCentral.add(jbArrow, constraints);
+		panelCentral.add(jbEquals);
 
-		/////////////////////////////// LABEL//////////////////////////////////////
+		/////////////////////////////// TEXTFIELD//////////////////////////////////////
 
-		constraints.gridx = 0;
-		constraints.gridy = 0;
-		constraints.gridwidth = 10;
-		constraints.gridheight = 1;
-		panelSuperior.add(resultado, constraints);
+		panelSuperior.add(resultado);
 
 		frame.add(panelCentral, BorderLayout.CENTER);
 		frame.add(panelSuperior, BorderLayout.NORTH);
